@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <title>Manage Masters</title>
+    </head>
+
+    <body>
+        <a href="index.html">Index</a><br>
+        <a href="view_master.html">View Masters</a><br>
+
+
+        <h3>Manage Masters</h3>
+
+        <h4 class="header">Add Master</h4>
+        <div class="form"> 
+            <label>Master ID:</label>
+            <input type="text" value="0000" readonly><br>
+            
+            <div class="dropdown">
+                <label for="class">Class:</label>
+                <select name="class">
+                    <option value="class_1">Class 1</option>
+                    <option value="class_2">Class 2</option>
+                    <option value="class_3">Class 3</option>
+                </select>
+            </div>
+            <div class="select">
+                <form>
+                    <label for="spells">Choose spells:</label>
+                    <select name="spells" id="multiselect" multiple>
+                        <option value="spell1">Spell 1</option>
+                        <option value="spell2">Spell 2</option>
+                        <option value="spell3">Spell 3</option>
+                        <option value="spell4">Spell 4</option>
+                        <option value="spell4">Spell 5</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="select">
+                <form>
+                    <label for="students">Choose students:</label>
+                    <select name="students" id="multiselect" multiple>
+                        <option value="student1">Student 1</option>
+                        <option value="student2">Student 2</option>
+                        <option value="student3">Student 3</option>
+                        <option value="student4">Student 4</option>
+                        <option value="student4">Student 5</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="input">
+                <form>
+                    <label for="name">Name: </label>
+                    <input type="text" name="name"><br>
+            
+                    <label for="birthdate">Birthdate: </label>
+                    <input type="date" name="birthdate"><br>
+                
+                    <label for="species">Species: </label>
+                    <input type="text" name="species"><br>
+                </form>
+            </div>
+            <div class="dropdown">
+                <label for="danger_level">Level:</label>
+                <select name="danger_level">
+                    <option value="danger_1">Apprentice</option>
+                    <option value="danger_2">Adept</option>
+                    <option value="danger_3">Expert</option>
+                    <option value="danger_4">Legendary</option>
+                    <option value="danger_5">Zenith</option>
+                </select>
+            </div>
+            <input type="submit" value="Submit New Master">
+        </div> <br>
+
+        <hr style="color:rgb(243, 243, 243)">
+
+        <h4 class="header">Update Master</h4>
+        <form>
+            <label for="master_id_update">Enter the ID of the master to update:</label>
+            <input type="number" name="master_id_update">
+            
+            <div class="dropdown">
+                <label for="class">Change class:</label>
+                <select name="class">
+                    <option value="class_1">Class 1</option>
+                    <option value="class_2">Class 2</option>
+                    <option value="class_3">Class 3</option>
+                </select>
+            </div>
+            <div class="select">
+                <form>
+                    <label for="spells">Edit spells:</label>
+                    <select name="spells" id="multiselect" multiple>
+                        <option value="spell1">Spell 1</option>
+                        <option value="spell2">Spell 2</option>
+                        <option value="spell3">Spell 3</option>
+                        <option value="spell4">Spell 4</option>
+                        <option value="spell4">Spell 5</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="select">
+                <form>
+                    <label for="students">Edit students:</label>
+                    <select name="students" id="multiselect" multiple>
+                        <option value="student1">Student 1</option>
+                        <option value="student2">Student 2</option>
+                        <option value="student3">Student 3</option>
+                        <option value="student4">Student 4</option>
+                        <option value="student4">Student 5</option>
+                    </select>
+                </form>
+            </div>
+            
+            <div class="input">
+                <label for="name">Change name: </label>
+                <input type="text" name="name"><br>
+            
+                <label for="cost">Change birthdate: </label>
+                <input type="date" name="birthdate"><br>
+            
+                <label for="species">Change species: </label>
+                <input type="text" name="species"><br>
+            </div>
+
+            <input type="submit" value="Update Master">
+        </form><br>
+        
+        <hr style="color:rgb(243, 243, 243)">
+
+        <h4 class="header">Remove Master</h4>
+        <form>
+            <label for="master_id_remove">Enter the ID of the master to be removed:</label>
+                <input type="number" name="master_id_remove"><br>
+            <input type="submit" value="Remove Master">
+        </form>
+
+    </body>
+</html>

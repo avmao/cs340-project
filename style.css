@@ -1,0 +1,56 @@
+body {
+    padding: 40px;
+    padding-top: 20px;
+}
+
+.title {
+    font-family: Helvetica, sans-serif;
+    font-size: 48px;
+    color:#804b16;
+    background-color: rgb(255, 240, 221);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.credits {
+    color:rgb(107, 107, 107);
+}
+
+h1 {
+    margin-bottom: 50px;
+}
+
+table {
+    margin-top: 10px;
+}
+
+.dropdown, .description, label, input {
+    margin-bottom: 6px;
+}
+
+table {
+    width: 80%;
+}
+
+.search {
+    margin-bottom: 30px;
+}
+
+.table_ms, .table_ss {
+    width: 30%;
+}
+
+#table_id, #table_title, #table_dl {
+    width: 14%;
+}
+
+tr:nth-child(even) {
+    background-color: #e7e7e7;
+}
+
+#multiselect {
+    width: 15%;
+}
+
