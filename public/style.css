@@ -4,13 +4,6 @@ body {
 }
 
 .title {
-    font-family: Helvetica, sans-serif;
-    font-size: 48px;
-    color:#804b16;
-    background-color: rgb(255, 240, 221);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
     font-weight: bold;
 }
 
