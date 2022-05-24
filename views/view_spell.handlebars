@@ -1,12 +1,25 @@
+<div>Spell Index:</div>
 <table>
-{{#each spell}}
-  <tr>
-    <td>{{spell_id}}</td>
-    <td>{{spell_class}}</td>
-	<td>{{spell_element}}</td>
-    <td>{{spell_name}}</td>
-	<td>{{spell_cost}}</td>
-	<td>{{spell _damage}}</td>
-  </tr>
-{{/each}}
-</table>
+    <thead> 
+        <th>ID</th> 
+        <th>Class</th> 
+        <th>Element</th> 
+		<th>Name</th> 
+		<th>Cost</th> 
+		<th>Damage</th> 
+    </thead> 
+    <tbody>
+        {{#each spell}} 
+        <tr> 
+            <td>{{this.spell_id}}</td>
+            <td>{{this.class_id}}</td>
+            <td>{{this.element}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.cost}}</td>
+            <td>{{this.damage}}</td> 
+            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
+            <td><a href="/medication2/{{id}}">Update</a></td>-->
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 

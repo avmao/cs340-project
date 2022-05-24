@@ -2,17 +2,26 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    function getSpells(res, mysql, context, complete){
-        mysql.pool.query("SELECT * FROM Spell", function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
+    function getSpells(res, mysql, context, complete) {
+        mysql.pool.query(
+            'SELECT * FROM Spell',
+            function (error, results, fields) {
+                if (error) {
+                    res.write(JSON.stringify(error));
+                    res.end();
+                }
+                context.spell = [];
+                console.log(results);
+                for (var i = 0; i < results.length; i++) {
+                    context.spell.push({ ...results[i] })
+                }
+                console.log('In getSpells:', context.spell);
+                complete();
             }
-            context.view_spell = results;
-            complete();
-        });
+        );
     }
 
+/*
     function getClasses(res, mysql, context, complete){
         mysql.pool.query("SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id", function(error, results, fields){
             if(error){
@@ -38,7 +47,7 @@ module.exports = function(){
         });
     }
 
-    /* Find people whose fname starts with a given string in the req */
+    /* Find people whose fname starts with a given string in the req 
     function getPeopleWithNameLike(req, res, mysql, context, complete) {
       //sanitize the input as well as include the % character
        var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.fname LIKE " + mysql.pool.escape(req.params.s + '%');
@@ -66,26 +75,26 @@ module.exports = function(){
             complete();
         });
     }
-
+*/
     /*Display all spells. Requires web based javascript to delete users with AJAX*/
-
-    router.get('/', function(req, res){
+    router.get('/', function (req, res) {
+        console.log('got here');
         var callbackCount = 0;
         var context = {};
         //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
         var mysql = req.app.get('mysql');
-        getSpells(res, mysql, context, complete);
         //getClasses(res, mysql, context, complete);
-        function complete(){
+        function complete() {
             callbackCount++;
-            if(callbackCount >= 2){
-                res.render('view_spell', context);
-            }
-
+            // if (callbackCount >= 2) {
+            console.log('In router', context);
+            res.render('view_spell', context);
+            // }
         }
+        getSpells(res, mysql, context, complete);
     });
 
-    /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX*/
+    /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX
     router.get('/filter/:homeworld', function(req, res){
         var callbackCount = 0;
         var context = {};
@@ -102,7 +111,7 @@ module.exports = function(){
         }
     });
 
-    /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX */
+    /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX 
     router.get('/search/:s', function(req, res){
         var callbackCount = 0;
         var context = {};
@@ -118,8 +127,7 @@ module.exports = function(){
         }
     });
 
-    /* Display one person for the specific purpose of updating people */
-
+    /* Display one person for the specific purpose of updating people 
     router.get('/:id', function(req, res){
         callbackCount = 0;
         var context = {};
@@ -136,8 +144,7 @@ module.exports = function(){
         }
     });
 
-    /* Adds a person, redirects to the people page after adding */
-
+    /* Adds a person, redirects to the people page after adding 
     router.post('/', function(req, res){
         console.log(req.body.homeworld)
         console.log(req.body)
@@ -155,8 +162,7 @@ module.exports = function(){
         });
     });
 
-    /* The URI that update data is sent to in order to update a person */
-
+    /* The URI that update data is sent to in order to update a person 
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         console.log(req.body)
@@ -175,8 +181,7 @@ module.exports = function(){
         });
     });
 
-    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
-
+    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. 
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM bsg_people WHERE character_id = ?";
@@ -192,6 +197,6 @@ module.exports = function(){
             }
         })
     })
-
+*/
     return router;
 }();

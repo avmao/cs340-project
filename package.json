@@ -6,21 +6,25 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  
   "author": "OSU",
   "engines": {
     "node": "16.13.0"
   },
-  
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
-    "express": "^4.13.2",
-    "express-handlebars": "^2.0.1",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
     "express-session": "^1.11.3",
     "forever": "^4.0.3",
+    "graceful-fs": "^4.2.10",
     "i": "^0.3.7",
     "moment": "^2.29.3",
-    "mysql": "^2.8.0"
+    "mysql": "^2.8.0",
+    "mysql-client": "^0.3.0",
+    "save": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/express-handlebars": "^6.0.0"
   }
 }

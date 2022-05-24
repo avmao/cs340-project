@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var pool = mysql.createPool({
-  connectionLimit : 10,
+  connectTimeout  : 100000,
   host            : 'classmysql.engr.oregonstate.edu',
   user            : 'cs340_maomal',
   password        : '1658',
