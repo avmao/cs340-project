@@ -2,15 +2,15 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    function getSpells(res, mysql, context, complete) {
-        mysql.pool.query('SELECT * FROM Spell', function (error, results, fields) {
+    function getStudents(res, mysql, context, complete) {
+        mysql.pool.query('SELECT * FROM Student', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.spell = [];
+            context.student = [];
             for (var i = 0; i < results.length; i++) {
-                context.spell.push({ ...results[i] })
+                context.student.push({ ...results[i] })
             }
             complete();
             }
@@ -79,33 +79,15 @@ module.exports = function(){
         //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
         var mysql = req.app.get('mysql');
 
-        getSpells(res, mysql, context, complete);
+        getStudents(res, mysql, context, complete);
         getClasses(res, mysql, context, complete);
 
         function complete() {
             callbackCount++;
             if(callbackCount >= 2){
-                res.render('spell', context);
+                res.render('student', context);
             }
         }
-    });
-
-    // NO SQL INJECTION PREVENTION IMPLEMENTED YET
-    router.post('/addspell', async(req, res) => {
-        let data = req.body;
-
-        query1 = `INSERT INTO Spell (spell_id, class_id, element, name, cost, damage) VALUES ('${data['uname']}', '${data['pass']}')`;
-        con.query(query1, async(error, rows, fields) => {
-            if (error) {
-                console.log(error)
-                res.sendStatus(400);
-            }
-            else
-            {
-                console.log("Inserted Value " + data.uname + " " + data.pass);
-                res.redirect('/users');
-            }
-        })
     });
 
     /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX

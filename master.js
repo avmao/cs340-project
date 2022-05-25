@@ -2,15 +2,15 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    function getSpells(res, mysql, context, complete) {
-        mysql.pool.query('SELECT * FROM Spell', function (error, results, fields) {
+    function getMasters(res, mysql, context, complete) {
+        mysql.pool.query('SELECT * FROM Master', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.spell = [];
+            context.master = [];
             for (var i = 0; i < results.length; i++) {
-                context.spell.push({ ...results[i] })
+                context.master.push({ ...results[i] })
             }
             complete();
             }
@@ -27,6 +27,8 @@ module.exports = function(){
             complete();
         });
     }
+
+
 /*
     function getPeoplebyHomeworld(req, res, mysql, context, complete){
       var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.homeworld = ?";
@@ -71,7 +73,7 @@ module.exports = function(){
         });
     }
 */
-    /*Display all spells. Requires web based javascript to delete users with AJAX*/
+    /*Display all masters. Requires web based javascript to delete users with AJAX*/
     router.get('/', function (req, res) {
         var context = {};
         var callbackCount = 0;
@@ -79,33 +81,15 @@ module.exports = function(){
         //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
         var mysql = req.app.get('mysql');
 
-        getSpells(res, mysql, context, complete);
+        getMasters(res, mysql, context, complete);
         getClasses(res, mysql, context, complete);
 
         function complete() {
             callbackCount++;
             if(callbackCount >= 2){
-                res.render('spell', context);
+                res.render('master', context);
             }
         }
-    });
-
-    // NO SQL INJECTION PREVENTION IMPLEMENTED YET
-    router.post('/addspell', async(req, res) => {
-        let data = req.body;
-
-        query1 = `INSERT INTO Spell (spell_id, class_id, element, name, cost, damage) VALUES ('${data['uname']}', '${data['pass']}')`;
-        con.query(query1, async(error, rows, fields) => {
-            if (error) {
-                console.log(error)
-                res.sendStatus(400);
-            }
-            else
-            {
-                console.log("Inserted Value " + data.uname + " " + data.pass);
-                res.redirect('/users');
-            }
-        })
     });
 
     /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX

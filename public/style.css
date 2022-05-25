@@ -1,6 +1,16 @@
 body {
     padding: 40px;
-    padding-top: 20px;
+    padding-top: 5px;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: #489d9c;
+    
+}
+
+a:hover {
+    color: #89edff;
 }
 
 .title {
@@ -17,14 +27,28 @@ h1 {
 
 table {
     margin-top: 10px;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 2px;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+th {
+    background-color: #cce8dd;
+    padding: 4px;
+    padding-left: 14px;
+    padding-right: 14px;
+    color: black;
 }
 
 .dropdown, .description, label, input {
     margin-bottom: 6px;
-}
-
-table {
-    width: 80%;
 }
 
 .search {
@@ -40,10 +64,16 @@ table {
 }
 
 tr:nth-child(even) {
-    background-color: #e7e7e7;
+    background-color: #cacaca;
 }
 
 #multiselect {
     width: 15%;
 }
 
+hr {
+    color:rgb(243, 243, 243);
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+}
