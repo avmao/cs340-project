@@ -13,7 +13,6 @@ var handlebars = require('express-handlebars').create({
 
 app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
 app.set('mysql', mysql);
@@ -22,6 +21,9 @@ app.use('/spell', require('./spell.js'));
 app.use('/class', require('./class.js'));
 app.use('/master', require('./master.js'));
 app.use('/student', require('./student.js'));
+
+app.use('/master_spell', require('./master_spell.js'));
+app.use('/student_spell', require('./student_spell.js'));
 
 app.use('/', express.static('public'));
 

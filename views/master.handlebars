@@ -1,9 +1,8 @@
-<h3>Spell Index</h3>
+<h3>Master Index</h3>
 <table>
     <thead> 
         <th>ID</th> 
         <th>Class</th> 
-        <th>Element</th> 
 		<th>Name</th> 
 		<th>Level</th> 
 		<th>Date Born</th> 
@@ -14,7 +13,6 @@
         <tr> 
             <td>{{this.master_id}}</td>
             <td>{{this.class_id}}</td>
-            <td>(Link to spell roster)</td>
             <td>{{this.master_name}}</td>
             <td>{{this.master_level}}</td>
             <td>{{this.date_born}}</td>
@@ -25,6 +23,8 @@
         {{/each}} 
     </tbody> 
 </table>
+
+<p>You can view each master's spell roster <a href="/master_spell">here</a>.
 
 <hr>
 

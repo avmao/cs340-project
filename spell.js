@@ -18,7 +18,7 @@ module.exports = function(){
     }
 
     function getClasses(res, mysql, context, complete){
-        mysql.pool.query("SELECT class_id AS class_id, class_id FROM Class", function(error, results, fields){
+        mysql.pool.query("SELECT class_id AS class_id FROM Class", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -78,10 +78,8 @@ module.exports = function(){
 
         //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
         var mysql = req.app.get('mysql');
-
         getSpells(res, mysql, context, complete);
         getClasses(res, mysql, context, complete);
-
         function complete() {
             callbackCount++;
             if(callbackCount >= 2){
@@ -90,22 +88,22 @@ module.exports = function(){
         }
     });
 
-    // NO SQL INJECTION PREVENTION IMPLEMENTED YET
-    router.post('/addspell', async(req, res) => {
-        let data = req.body;
-
-        query1 = `INSERT INTO Spell (spell_id, class_id, element, name, cost, damage) VALUES ('${data['uname']}', '${data['pass']}')`;
-        con.query(query1, async(error, rows, fields) => {
-            if (error) {
-                console.log(error)
-                res.sendStatus(400);
+    router.post('/', function(req, res) {
+        //console.log(req.body.spell);
+        console.log(req.body);
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO Spell (spell_id, class_id, spell_name, element, cost, damage) VALUES (?,?,?,?,?,?)";
+        var inserts = [req.body.spell_id, req.body.class_id, req.body.spell_name, req.body.element, req.body.cost, req.body.damage];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                console.log(JSON.stringify(error));
+                res.write(JSON.stringify(error));
+                res.end();
+                res.redirect('/spell');
+            } else {
+                res.redirect('/spell');
             }
-            else
-            {
-                console.log("Inserted Value " + data.uname + " " + data.pass);
-                res.redirect('/users');
-            }
-        })
+        });
     });
 
     /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX
@@ -157,8 +155,6 @@ module.exports = function(){
 
         }
     });
-
-    /* 
 
     /* The URI that update data is sent to in order to update a person 
     router.put('/:id', function(req, res){

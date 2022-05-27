@@ -4,7 +4,6 @@
         <th>ID</th> 
         <th>Class</th> 
         <th>Studying Under</th> 
-		<th>Spell Roster</th> 
 		<th>Level</th> 
 		<th>Date Born</th> 
         <th>Registration Year</th> 
@@ -18,7 +17,6 @@
             <td>{{this.student_id}}</td>
             <td>{{this.class_id}}</td>
             <td>{{this.master_id}}</td>
-            <td>(Link)</td>
             <td>{{this.student_level}}</td>
             <td>{{this.date_born}}</td> 
             <td>{{this.registration_year}}</td> 
@@ -30,6 +28,8 @@
         {{/each}} 
     </tbody> 
 </table>
+
+<p>You can view each student's spell roster <a href="/student_spell">here</a>.
 
 <hr>
 

@@ -25,6 +25,10 @@ h1 {
     margin-bottom: 50px;
 }
 
+h4 {
+    margin-bottom: 10px;
+}
+
 table {
     margin-top: 10px;
     border: 1px solid;
@@ -47,8 +51,10 @@ th {
     color: black;
 }
 
-.dropdown, .description, label, input {
-    margin-bottom: 6px;
+.dropdown, .description, label, input, select {
+    margin-top: 4px;
+    margin-bottom: 4px;
+
 }
 
 .search {
@@ -64,7 +70,7 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #cacaca;
+    background-color: #f1f7f4;
 }
 
 #multiselect {

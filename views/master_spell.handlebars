@@ -1,0 +1,46 @@
+<h3>Master Spell Rosters</h3>
+<table>
+    <thead> 
+        <th>Spell Registration ID</th> 
+        <th>Master ID</th> 
+        <th>Spell ID</th> 
+    </thead> 
+    <tbody>
+        {{#each master_spell}} 
+        <tr> 
+            <td>{{master_spell_id}}</td>
+            <td>{{master_id}}</td>
+            <td>{{spell_id}}</td>
+            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
+            <td><a href="/medication2/{{id}}">Update</a></td>-->
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table>
+<hr>
+
+<h3>Manage Master Spell Roster</h3>
+
+<h4 class="header">Add new spell to a master's current roster:</h4>
+<form id="add_master_spell" method="POST" action="/add_master_spell">         
+    <div class="dropdown">
+        <label for="master_id">Master ID:</label>
+        <select name="master_id">
+            {{#each master}}
+                <option value='{{master_id}}'>{{master_id}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <div class="dropdown">
+        <label for="spell_id">Spell ID:</label>
+        <select name="spell_id">
+            {{#each spell}}
+                <option value='{{spell_id}}'>{{spell_id}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <input type="submit" value="Submit">
+
+</form>
