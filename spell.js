@@ -57,20 +57,22 @@ module.exports = function(){
             complete();
         });
     }
-
-    function getPerson(res, mysql, context, id, complete){
-        var sql = "SELECT character_id as id, fname, lname, homeworld, age FROM bsg_people WHERE character_id = ?";
+    */
+    function getSpell(res, mysql, context, id, complete) {
+        var sql = "SELECT * FROM Spell WHERE spell_id = ?";
         var inserts = [id];
+        // console.log('getSpells function inserts result: ', inserts)
         mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.person = results[0];
+            context.spell = results[0];
             complete();
         });
     }
-*/
+    
+
     /*Display all spells. Requires web based javascript to delete users with AJAX*/
     router.get('/', function (req, res) {
         var context = {};
@@ -137,32 +139,33 @@ module.exports = function(){
                 res.render('people', context);
             }
         }
-    });
+    }); */
 
-    /* Display one person for the specific purpose of updating people 
+    //Display one person for the specific purpose of updating people 
     router.get('/:id', function(req, res){
         callbackCount = 0;
         var context = {};
-        context.jsscripts = ["selectedplanet.js", "updateperson.js"];
+        context.jsscripts = ["classSelect.js", "updatespell.js"];
+        // context.jsscripts = ["updatespell.js"];
         var mysql = req.app.get('mysql');
-        getPerson(res, mysql, context, req.params.id, complete);
-        getPlanets(res, mysql, context, complete);
+        getSpell(res, mysql, context, req.params.id, complete);
+        getClasses(res, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 2){
-                res.render('update-person', context);
+                res.render('update-spell', context);
             }
 
         }
     });
 
-    /* The URI that update data is sent to in order to update a person 
+    // The URI that update data is sent to in order to update a person 
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         console.log(req.body)
         console.log(req.params.id)
-        var sql = "UPDATE bsg_people SET fname=?, lname=?, homeworld=?, age=? WHERE character_id=?";
-        var inserts = [req.body.fname, req.body.lname, req.body.homeworld, req.body.age, req.params.id];
+        var sql = "UPDATE Spell SET spell_id=?, class_id=?, spell_name=?, element=?, cost=?, damage=? WHERE spell_id=?";
+        var inserts = [req.body.spell_id, req.body.class_id, req.body.spell_name, req.body.element, req.body.cost, req.body.damage, req.params.id];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 console.log(error)

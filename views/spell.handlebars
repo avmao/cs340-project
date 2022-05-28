@@ -17,8 +17,8 @@
             <td>{{this.spell_name}}</td>
             <td>{{this.cost}}</td>
             <td>{{this.damage}}</td> 
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/medication2/{{id}}">Update</a></td>-->
+            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>-->
+            <td><a href="/spell/{{this.spell_id}}">Update</a></td>
         </tr> 
         {{/each}} 
     </tbody> 
@@ -81,9 +81,12 @@
     <div class="dropdown">
         <label for="element">Change element:</label>
         <select name="element">
-            <option value="element_1">Element 1</option>
-            <option value="element_2">Element 2</option>
-            <option value="element_3">Element 3</option>
+            <option value="Air">Air</option>
+            <option value="Water">Water</option>
+            <option value="Fire">Fire</option>
+            <option value="Earth">Earth</option>
+            <option value="Dark">Dark</option>
+            <option value="Light">Light</option>
         </select>
     </div>
 
