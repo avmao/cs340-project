@@ -3,11 +3,11 @@
     <thead> 
         <th>ID</th> 
         <th>Class</th> 
+        <th>Name</th> 
         <th>Studying Under</th> 
 		<th>Level</th> 
 		<th>Date Born</th> 
-        <th>Registration Year</th> 
-		<th>Name</th> 
+        <th>Registration Date</th> 
 		<th>Species</th> 
 
     </thead> 
@@ -16,11 +16,11 @@
         <tr> 
             <td>{{this.student_id}}</td>
             <td>{{this.class_id}}</td>
-            <td>{{this.master_id}}</td>
-            <td>{{this.student_level}}</td>
-            <td>{{this.date_born}}</td> 
-            <td>{{this.registration_year}}</td> 
             <td>{{this.student_name}}</td> 
+            <td>{{this.master_id}}</td>
+            <td>{{this.danger_level}}</td>
+            <td>{{this.date_born}}</td> 
+            <td>{{this.registration}}</td> 
             <td>{{this.species}}</td> 
             <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
             <td><a href="/medication2/{{id}}">Update</a></td>-->
@@ -36,68 +36,49 @@
 <h3>Manage Students</h3>
 
 <h4 class="header">Add Student</h4>
-<div class="form"> 
-    <label>Student ID:</label>
-    <input type="text" value="0000" readonly><br>
-    
+<form id="add_student" method="POST" action="/student"> 
     <div class="dropdown">
         <label for="class">Class:</label>
-        <select name="class">
+        <select name="class_id">
             {{#each class}}
                 <option value='{{class_id}}'>{{class_id}}</option>
             {{/each}}
         </select>
     </div>
-    <div class="select">
-        <form>
-            <label for="spells">Choose spells:</label>
-            <select name="spells" id="multiselect" multiple>
-                <option value="spell1">Spell 1</option>
-                <option value="spell2">Spell 2</option>
-                <option value="spell3">Spell 3</option>
-                <option value="spell4">Spell 4</option>
-                <option value="spell4">Spell 5</option>
-            </select>
-        </form>
-    </div>
-
-    <div class="dropdown">
-        <form>
-            <label for="choose_master">Choose master:</label>
-            <select name="edit_master">
-                <option value="master_1">Master 1</option>
-                <option value="master_2">Master 2</option>
-                <option value="master_3">Master 3</option>
-                <option value="master_4">Master 4</option>
-                <option value="master_5">Master 5</option>
-            </select>
-        </form>
-    </div>
 
     <div class="input">
-        <form>
-            <label for="name">Name: </label>
-            <input type="text" name="name"><br>
+        <label for="name">Name: </label>
+        <input type="text" name="student_name"><br>
     
-            <label for="birthdate">Birthdate: </label>
-            <input type="date" name="birthdate"><br>
-        
-            <label for="species">Species: </label>
-            <input type="text" name="species"><br>
-        </form>
+        <label for="species">Species: </label>
+        <input type="text" name="species"><br>
+
+        <label for="date_born">Birthdate: </label>
+        <input type="date" name="date_born"><br>
+
+        <label for="reg_year">Registration date: </label>
+        <input type="date" name="registration"><br>
     </div>
     <div class="dropdown">
-        <label for="danger_level">Level:</label>
+        <label for="danger_level">Danger level:</label>
         <select name="danger_level">
-            <option value="danger_1">Apprentice</option>
-            <option value="danger_2">Adept</option>
-            <option value="danger_3">Expert</option>
-            <option value="danger_4">Legendary</option>
-            <option value="danger_5">Zenith</option>
+            <option value="Apprentice">Apprentice</option>
+            <option value="Adept">Adept</option>
+            <option value="Expert">Expert</option>
+            <option value="Legendary">Legendary</option>
+            <option value="Zenith">Zenith</option>
+        </select>
+    </div>
+    <div class="dropdown">
+        <label for="master">Master:</label>
+        <select name="master_id">
+            {{#each master}}
+                <option value='{{master_id}}'>{{master_id}}</option>
+            {{/each}}
         </select>
     </div>
     <input type="submit" value="Submit New Student">
-</div> <br>
+</form>
 
 <hr>
 

@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getSpells(res, mysql, context, complete){
-        mysql.pool.query("SELECT spell_id AS spell_id, spell_name FROM Spell", function(error, results, fields){
+        mysql.pool.query("SELECT spell_id AS spell_id, spell_name FROM spell", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -14,7 +14,7 @@ module.exports = function(){
     }
 
     function getMasters(res, mysql, context, complete){
-        mysql.pool.query("SELECT master_id AS master_id FROM Master", function(error, results, fields){
+        mysql.pool.query("SELECT master_id AS master_id FROM master", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -26,7 +26,7 @@ module.exports = function(){
 
     
     function getMasterRoster(res, mysql, context, complete){
-        mysql.pool.query("SELECT * FROM Master_Spells", function(error, results, fields){
+        mysql.pool.query("SELECT * FROM master_spell", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -52,5 +52,22 @@ module.exports = function(){
         }
     });
      
+    router.post('/', function(req, res) {
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO master_spell (master_spell_id, master_id, spell_id) VALUES (?,?,?)";
+        var inserts = [req.body.master_spell_id, req.body.master_id, req.body.spell_id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                console.log(JSON.stringify(error));
+                res.write(JSON.stringify(error));
+                res.end();
+                res.redirect('/master_spell');
+            } else {
+                res.redirect('/master_Spell');
+            }
+        });
+    });
+
+
     return router;
 }();

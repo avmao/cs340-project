@@ -17,12 +17,13 @@
         {{/each}} 
     </tbody> 
 </table>
+
 <hr>
 
 <h3>Manage Master Spell Roster</h3>
 
 <h4 class="header">Add new spell to a master's current roster:</h4>
-<form id="add_master_spell" method="POST" action="/add_master_spell">         
+<form id="add_master_spell" method="POST" action="/master_spell">         
     <div class="dropdown">
         <label for="master_id">Master ID:</label>
         <select name="master_id">
@@ -40,7 +41,5 @@
             {{/each}}
         </select>
     </div>
-
     <input type="submit" value="Submit">
-
 </form>

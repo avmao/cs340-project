@@ -18,7 +18,7 @@
             <td>{{this.cost}}</td>
             <td>{{this.damage}}</td> 
             <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>-->
-            <td><a href="/spell/{{this.spell_id}}">Update</a></td>
+            <!--<td><a href="/spell/{{this.spell_id}}">Update</a></td>-->
         </tr> 
         {{/each}} 
     </tbody> 
@@ -66,7 +66,7 @@
 <hr>
 
 <h4 class="header">Update Spell</h4>
-<form id="update_spell">
+<form id="update_spell" method="POST" action="/spell">
     <label for="spell_id_update">Enter the ID of the spell to update:</label>
     <input type="number" name="spell_id_update">
 

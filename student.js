@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getStudents(res, mysql, context, complete) {
-        mysql.pool.query('SELECT * FROM Student', function (error, results, fields) {
+        mysql.pool.query('SELECT * FROM student', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
@@ -18,7 +18,7 @@ module.exports = function(){
     }
 
     function getClasses(res, mysql, context, complete){
-        mysql.pool.query("SELECT class_id AS class_id, class_id FROM Class", function(error, results, fields){
+        mysql.pool.query("SELECT class_id AS class_id, class_id FROM class", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -27,7 +27,19 @@ module.exports = function(){
             complete();
         });
     }
-/*
+
+    function getMasters(res, mysql, context, complete){
+        mysql.pool.query("SELECT master_id AS master_id FROM master", function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.master = results;
+            complete();
+        });
+    }
+
+    /*
     function getPeoplebyHomeworld(req, res, mysql, context, complete){
       var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.homeworld = ?";
       console.log(req.params)
@@ -81,13 +93,30 @@ module.exports = function(){
 
         getStudents(res, mysql, context, complete);
         getClasses(res, mysql, context, complete);
+        getMasters(res, mysql, context, complete);
 
         function complete() {
             callbackCount++;
-            if(callbackCount >= 2){
+            if(callbackCount >= 3){
                 res.render('student', context);
             }
         }
+    });
+
+    router.post('/', function(req, res) {
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO student (student_id, class_id, master_id, danger_level, date_born, registration, student_name, species) VALUES (?,?,?,?,?,?,?,?)";
+        var inserts = [req.body.student_id, req.body.class_id, req.body.master_id, req.body.danger_level, req.body.date_born, req.body.registration, req.body.student_name, req.body.species];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                console.log(JSON.stringify(error));
+                res.write(JSON.stringify(error));
+                res.end();
+                res.redirect('/student');
+            } else {
+                res.redirect('/student');
+            }
+        });
     });
 
     /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX

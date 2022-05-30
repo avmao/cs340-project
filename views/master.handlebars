@@ -2,8 +2,8 @@
 <table>
     <thead> 
         <th>ID</th> 
+        <th>Name</th>
         <th>Class</th> 
-		<th>Name</th> 
 		<th>Level</th> 
 		<th>Date Born</th> 
         <th>Species</th> 
@@ -12,9 +12,9 @@
         {{#each master}} 
         <tr> 
             <td>{{this.master_id}}</td>
-            <td>{{this.class_id}}</td>
             <td>{{this.master_name}}</td>
-            <td>{{this.master_level}}</td>
+            <td>{{this.class_id}}</td>
+            <td>{{this.danger_level}}</td>
             <td>{{this.date_born}}</td>
             <td>{{this.species}}</td> 
             <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
@@ -31,70 +31,40 @@
 <h3>Manage Masters</h3>
 
 <h4 class="header">Add Master</h4>
-<div class="form"> 
-    <label>Master ID:</label>
-    <input type="text" value="0000" readonly><br>
-    
+<form id="add_master" method="POST" action="/master"> 
     <div class="dropdown">
         <label for="class">Class:</label>
-        <select name="class">
+        <select name="class_id">
             {{#each class}}
-                <option value='{{class_id}}'>{{class_id}}</option>
+                <option value="{{class_id}}">{{class_id}}</option>
             {{/each}}
         </select>
     </div>
-    <div class="select">
-        <form>
-            <label for="spells">Choose spells:</label>
-            <select name="spells" id="multiselect" multiple>
-                <option value="spell1">Spell 1</option>
-                <option value="spell2">Spell 2</option>
-                <option value="spell3">Spell 3</option>
-                <option value="spell4">Spell 4</option>
-                <option value="spell4">Spell 5</option>
-            </select>
-        </form>
-    </div>
-
-    <div class="select">
-        <form>
-            <label for="students">Choose students:</label>
-            <select name="students" id="multiselect" multiple>
-                <option value="student1">Student 1</option>
-                <option value="student2">Student 2</option>
-                <option value="student3">Student 3</option>
-                <option value="student4">Student 4</option>
-                <option value="student4">Student 5</option>
-            </select>
-        </form>
-    </div>
 
     <div class="input">
-        <form>
-            <label for="name">Name: </label>
-            <input type="text" name="name"><br>
+        <label for="name">Name: </label>
+        <input type="text" name="master_name"><br>
+
+        <label for="birthdate">Birthdate: </label>
+        <input type="date" name="date_born"><br>
     
-            <label for="birthdate">Birthdate: </label>
-            <input type="date" name="birthdate"><br>
-        
-            <label for="species">Species: </label>
-            <input type="text" name="species"><br>
-        </form>
+        <label for="species">Species: </label>
+        <input type="text" name="species"><br>
     </div>
     <div class="dropdown">
         <label for="danger_level">Level:</label>
         <select name="danger_level">
-            <option value="danger_1">Apprentice</option>
-            <option value="danger_2">Adept</option>
-            <option value="danger_3">Expert</option>
-            <option value="danger_4">Legendary</option>
-            <option value="danger_5">Zenith</option>
+            <option value="Apprentice">Apprentice</option>
+            <option value="Adept">Adept</option>
+            <option value="Expert">Expert</option>
+            <option value="Legendary">Legendary</option>
+            <option value="Zenith">Zenith</option>
         </select>
     </div>
     <input type="submit" value="Submit New Master">
-</div> <br>
+</form>
 
-<hr style="color:rgb(243, 243, 243)">
+<hr>
 
 <h4 class="header">Update Master</h4>
 <form>
@@ -147,9 +117,9 @@
     </div>
 
     <input type="submit" value="Update Master">
-</form><br>
+</form>
 
-<hr style="color:rgb(243, 243, 243)">
+<hr>
 
 <h4 class="header">Remove Master</h4>
 <form>

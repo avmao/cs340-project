@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getMasters(res, mysql, context, complete) {
-        mysql.pool.query('SELECT * FROM Master', function (error, results, fields) {
+        mysql.pool.query('SELECT * FROM master', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
@@ -18,7 +18,7 @@ module.exports = function(){
     }
 
     function getClasses(res, mysql, context, complete){
-        mysql.pool.query("SELECT class_id AS class_id, class_id FROM Class", function(error, results, fields){
+        mysql.pool.query("SELECT class_id AS class_id, class_id FROM class", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -92,22 +92,22 @@ module.exports = function(){
         }
     });
 
-    /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX
-    router.get('/filter/:homeworld', function(req, res){
-        var callbackCount = 0;
-        var context = {};
-        context.jsscripts = ["deleteperson.js","filterpeople.js","searchpeople.js"];
+    router.post('/', function(req, res) {
         var mysql = req.app.get('mysql');
-        getPeoplebyHomeworld(req,res, mysql, context, complete);
-        getPlanets(res, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 2){
-                res.render('people', context);
+        var sql = "INSERT INTO master (master_id, class_id, master_name, danger_level, date_born, species) VALUES (?,?,?,?,?,?)";
+        var inserts = [req.body.master_id, req.body.class_id, req.body.master_name, req.body.danger_level, req.body.date_born, req.body.species];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                console.log(JSON.stringify(error));
+                res.write(JSON.stringify(error));
+                res.end();
+                res.redirect('/master');
+            } else {
+                res.redirect('/master');
             }
-
-        }
+        });
     });
+
 
     /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX 
     router.get('/search/:s', function(req, res){

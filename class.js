@@ -4,7 +4,7 @@ module.exports = function(){
 
     function getClasses(res, mysql, context, complete) {
         mysql.pool.query(
-            'SELECT * FROM Class',
+            'SELECT * FROM class',
             function (error, results, fields) {
                 if (error) {
                     res.write(JSON.stringify(error));
@@ -66,6 +66,8 @@ module.exports = function(){
 
 /*Display all classes. Requires web based javascript to delete users with AJAX*/
 router.get('/', function (req, res) {
+    console.log("get");
+
     var context = {};
     //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
     var mysql = req.app.get('mysql');
@@ -76,38 +78,22 @@ router.get('/', function (req, res) {
 });
 
 
-    /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX
-    router.get('/filter/:homeworld', function(req, res){
-        var callbackCount = 0;
-        var context = {};
-        context.jsscripts = ["deleteperson.js","filterpeople.js","searchpeople.js"];
-        var mysql = req.app.get('mysql');
-        getPeoplebyHomeworld(req,res, mysql, context, complete);
-        getPlanets(res, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 2){
-                res.render('people', context);
-            }
-
+router.post('/', function(req, res) {
+    console.log("post");
+    var mysql = req.app.get('mysql');
+    var sql = "INSERT INTO class (class_id, title, danger_level, description) VALUES (?,?,?,?)";
+    var inserts = [req.body.class_id, req.body.title, req.body.danger_level, req.body.description];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if(error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+            res.redirect('/class');
+        } else {
+            res.redirect('/class');
         }
     });
-
-    /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX 
-    router.get('/search/:s', function(req, res){
-        var callbackCount = 0;
-        var context = {};
-        context.jsscripts = ["deleteperson.js","filterpeople.js","searchpeople.js"];
-        var mysql = req.app.get('mysql');
-        getPeopleWithNameLike(req, res, mysql, context, complete);
-        getPlanets(res, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 2){
-                res.render('people', context);
-            }
-        }
-    });
+});
 
     /* Display one person for the specific purpose of updating people 
     router.get('/:id', function(req, res){

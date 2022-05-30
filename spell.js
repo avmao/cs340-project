@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getSpells(res, mysql, context, complete) {
-        mysql.pool.query('SELECT * FROM Spell', function (error, results, fields) {
+        mysql.pool.query('SELECT * FROM spell', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
@@ -18,7 +18,7 @@ module.exports = function(){
     }
 
     function getClasses(res, mysql, context, complete){
-        mysql.pool.query("SELECT class_id AS class_id FROM Class", function(error, results, fields){
+        mysql.pool.query("SELECT class_id AS class_id FROM class", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -91,10 +91,8 @@ module.exports = function(){
     });
 
     router.post('/', function(req, res) {
-        //console.log(req.body.spell);
-        console.log(req.body);
         var mysql = req.app.get('mysql');
-        var sql = "INSERT INTO Spell (spell_id, class_id, spell_name, element, cost, damage) VALUES (?,?,?,?,?,?)";
+        var sql = "INSERT INTO spell (spell_id, class_id, spell_name, element, cost, damage) VALUES (?,?,?,?,?,?)";
         var inserts = [req.body.spell_id, req.body.class_id, req.body.spell_name, req.body.element, req.body.cost, req.body.damage];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
             if(error) {
