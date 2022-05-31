@@ -20,7 +20,7 @@
             <td>{{this.cost}}</td>
             <td>{{this.damage}}</td>
             <td><a href="/spell/{{this.spell_id}}">Update</td>
-            <td><a onclick="deleteSpell({{this.spell_id}})">Delete</a></td>
+            <td><button id="delete_button" onclick="deleteSpell({{this.spell_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
     </tbody> 
@@ -63,56 +63,4 @@
         <input type="number" name="damage"><br>
     </div>
     <input type="submit" value="Submit New Spell">
-</form>
-
-<hr>
-
-<h4 class="header">Update Spell</h4>
-<form id="update_spell" method="POST" action="/spell">
-    <label for="spell_id_update">Enter the ID of the spell to update:</label>
-    <input type="number" name="spell_id_update">
-
-    <div class="dropdown">
-        <label for="class">Class:</label>
-        <select name="class">
-            {{#each class}}
-                <option value='{{class_id}}'>{{class_id}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div class="dropdown">
-        <label for="element">Change element:</label>
-        <select name="element">
-            <option value="Air">Air</option>
-            <option value="Water">Water</option>
-            <option value="Fire">Fire</option>
-            <option value="Earth">Earth</option>
-            <option value="Dark">Dark</option>
-            <option value="Light">Light</option>
-        </select>
-    </div>
-
-    <div class="input">
-        <form>
-            <label for="name">Change name: </label>
-            <input type="text" name="name"><br>
-        
-            <label for="cost">Change cost [10-1000]: </label>
-            <input type="number" name="cost"><br>
-        
-            <label for="damage">Change damage [0-10000]: </label>
-            <input type="number" name="damage"><br>
-        </form>
-    </div>
-
-    <input type="submit" value="Update Spell">
-</form>
-
-<hr>
-
-<h4 class="header">Remove Spell</h4>
-<form>
-    <label for="spell_id_remove">Enter the ID of the spell to be removed:</label>
-        <input type="number" name="spell_id_remove"><br>
-    <input type="submit" value="Remove Spell">
 </form>

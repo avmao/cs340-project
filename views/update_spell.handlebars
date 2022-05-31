@@ -18,9 +18,9 @@
 
 <form id="update_spell" action="/spell" method="POST">
     <div class="dropdown">
-        <label for="class">Class:</label>
+        <label for="class">Change class:</label>
         <select name="class_id"> 
-                <option value="{{class.class_id}}" selected> {{class.class_id}}</option>
+                <option value="{{spell.class_id}}" selected>{{spell.class_id}}</option>
             {{#each class}}
                 <option value="{{class_id}}">{{class_id}}</option>
             {{/each}}
@@ -50,5 +50,5 @@
         <input type="number" name="damage" value="{{spell.damage}}"><br>
     </div> <br>
 
-    <button onclick="update({{spell.spell_id}})">Update</button> <button><a href="/spell">Cancel</button>
+    <button onclick="updateSpell({{spell.spell_id}})">Update</button> <button><a href="/spell">Cancel</button>
 </form>

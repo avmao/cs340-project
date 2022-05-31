@@ -61,14 +61,12 @@ module.exports = function(){
     function getSpell(res, mysql, context, id, complete) {
         var sql = "SELECT * FROM spell WHERE spell_id = ?";
         var inserts = [id];
-        // console.log('getSpells function inserts result: ', inserts)
         mysql.pool.query(sql, inserts, function(error, results, fields){
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
             context.spell = results[0];
-            console.log(context.spell);
 
             complete();
         });
@@ -77,13 +75,14 @@ module.exports = function(){
 
     /*Display all spells. Requires web based javascript to delete users with AJAX*/
     router.get('/', function (req, res) {
-        var context = {};
         var callbackCount = 0;
-
-        //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
+        var context = {};
+        context.jsscripts = ["update.js", "delete.js"];
         var mysql = req.app.get('mysql');
+
         getSpells(res, mysql, context, complete);
         getClasses(res, mysql, context, complete);
+
         function complete() {
             callbackCount++;
             if(callbackCount >= 2){
@@ -96,6 +95,7 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO spell (spell_id, class_id, spell_name, element, cost, damage) VALUES (?,?,?,?,?,?)";
         var inserts = [req.body.spell_id, req.body.class_id, req.body.spell_name, req.body.element, req.body.cost, req.body.damage];
+
         sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
             if(error) {
                 console.log(JSON.stringify(error));
@@ -144,57 +144,61 @@ module.exports = function(){
     router.get("/:id", function (req, res) {
         callbackCount = 0;
         var context = {};
-        context.jsscripts = [ "update.js" ];  // "delete.js", "search.js",
+        context.jsscripts = ["update.js", "delete.js"];
         var mysql = req.app.get("mysql");
 
         getSpell(res, mysql, context, req.params.id, complete);
         getClasses(res, mysql, context, complete);
-        console.log(req.params.id);
 
         function complete() {
             callbackCount++;
             if (callbackCount >= 2) {
-              res.render("update_spell", context);
+            res.render("update_spell", context);
             }
-          }
+        }
+    
       });
 
     // The URI that update data is sent to in order to update a person 
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        console.log(req.body)
-        console.log(req.params.id)
-        var sql = "UPDATE Spell SET spell_id=?, class_id=?, spell_name=?, element=?, cost=?, damage=? WHERE spell_id=?";
+        var sql = "UPDATE spell SET spell_id=?, class_id=?, spell_name=?, element=?, cost=?, damage=? WHERE spell_id=?";
         var inserts = [req.body.spell_id, req.body.class_id, req.body.spell_name, req.body.element, req.body.cost, req.body.damage, req.params.id];
 
-        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-        if (error) {
-            console.log(error)
-            res.write(JSON.stringify(error));
-            res.end();
-        } else {
-            res.status(200);
-            res.end();
+        if (!inserts[0] === true || !inserts[1] === true || !inserts[2] === true || !inserts[3] === true || !inserts[4] === true || !inserts[5] === true) {
+            res.redirect(req.get("/spell"));
+            console.log("Please fill in all input fields.");
+        } 
+        else {
+            sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+                if (error) {
+                    console.log(error)
+                    res.write(JSON.stringify(error));
+                    res.end();
+                } else {
+                    res.status(200);
+                    res.end();
+                }
+            });
         }
-        });
     });
 
-    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. 
+    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM bsg_people WHERE character_id = ?";
+        var sql = "DELETE FROM spell WHERE spell_id=?";
         var inserts = [req.params.id];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 console.log(error)
                 res.write(JSON.stringify(error));
-                res.status(400);
+                res.status(400);everythings
                 res.end();
-            }else{
+            } else {
                 res.status(202).end();
             }
-        })
+        });
     })
-*/
+
     return router;
 }();

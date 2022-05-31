@@ -87,3 +87,15 @@ hr {
 input[type=text] {
     width: 20%;
 }
+
+#delete_button {
+    border-style: none;
+    background-color: transparent;
+    color:#489d9c;
+    font-size: 16px;
+    font-family: serif;
+}
+
+#delete_button:hover {
+    color:#89edff;
+}
