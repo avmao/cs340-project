@@ -59,15 +59,17 @@ module.exports = function(){
     }
     */
     function getSpell(res, mysql, context, id, complete) {
-        var sql = "SELECT * FROM Spell WHERE spell_id = ?";
+        var sql = "SELECT * FROM spell WHERE spell_id = ?";
         var inserts = [id];
         // console.log('getSpells function inserts result: ', inserts)
         mysql.pool.query(sql, inserts, function(error, results, fields){
-            if(error){
+            if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
             context.spell = results[0];
+            console.log(context.spell);
+
             complete();
         });
     }
@@ -139,23 +141,23 @@ module.exports = function(){
         }
     }); */
 
-    //Display one person for the specific purpose of updating people 
-    router.get('/:id', function(req, res){
+    router.get("/:id", function (req, res) {
         callbackCount = 0;
         var context = {};
-        context.jsscripts = ["classSelect.js", "updatespell.js"];
-        // context.jsscripts = ["updatespell.js"];
-        var mysql = req.app.get('mysql');
+        context.jsscripts = [ "update.js" ];  // "delete.js", "search.js",
+        var mysql = req.app.get("mysql");
+
         getSpell(res, mysql, context, req.params.id, complete);
         getClasses(res, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 2){
-                res.render('update-spell', context);
-            }
+        console.log(req.params.id);
 
-        }
-    });
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 2) {
+              res.render("update_spell", context);
+            }
+          }
+      });
 
     // The URI that update data is sent to in order to update a person 
     router.put('/:id', function(req, res){
@@ -164,15 +166,16 @@ module.exports = function(){
         console.log(req.params.id)
         var sql = "UPDATE Spell SET spell_id=?, class_id=?, spell_name=?, element=?, cost=?, damage=? WHERE spell_id=?";
         var inserts = [req.body.spell_id, req.body.class_id, req.body.spell_name, req.body.element, req.body.cost, req.body.damage, req.params.id];
-        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
-            if(error){
-                console.log(error)
-                res.write(JSON.stringify(error));
-                res.end();
-            }else{
-                res.status(200);
-                res.end();
-            }
+
+        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(error)
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.status(200);
+            res.end();
+        }
         });
     });
 

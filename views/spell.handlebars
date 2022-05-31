@@ -6,7 +6,9 @@
         <th>Element</th> 
 		<th>Name</th> 
 		<th>Cost</th> 
-		<th>Damage</th> 
+		<th>Damage</th>
+        <th></th>
+        <th></th>
     </thead> 
     <tbody>
         {{#each spell}} 
@@ -16,9 +18,9 @@
             <td>{{this.element}}</td>
             <td>{{this.spell_name}}</td>
             <td>{{this.cost}}</td>
-            <td>{{this.damage}}</td> 
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>-->
-            <!--<td><a href="/spell/{{this.spell_id}}">Update</a></td>-->
+            <td>{{this.damage}}</td>
+            <td><a href="/spell/{{this.spell_id}}">Update</td>
+            <td><a onclick="deleteSpell({{this.spell_id}})">Delete</a></td>
         </tr> 
         {{/each}} 
     </tbody> 
