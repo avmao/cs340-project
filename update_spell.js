@@ -2,7 +2,7 @@ module.exports = function(){
     var express = require("express");
     var router = express.Router();
 
-
+    // Given a spell id, update that spell with the given information
     router.post("/", function(req, res) {
         var mysql = req.app.get("mysql");
         var sql = "UPDATE spell SET class_id=?, spell_name=?, element=?, cost=?, damage=? WHERE spell_id=?";

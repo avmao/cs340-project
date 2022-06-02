@@ -1,3 +1,4 @@
+{{! Table displaying all class info }}
 <h3>Class Index</h3>
 <table>
     <thead> 
@@ -6,8 +7,6 @@
         <th>Danger Level</th> 
 		<th>Description</th>
         <th></th> 
-        <th></th> 
-
     </thead> 
     <tbody>
         {{#each class}} 
@@ -16,7 +15,8 @@
             <td>{{this.title}}</td>
             <td>{{this.danger_level}}</td>
             <td>{{this.description}}</td> 
-            <td><a href="/class/{{this.class_id}}">Update</a></td>
+
+            {{! Deletes the corresponding class on click }}
             <td><button id="delete_button" onclick="deleteClass({{this.class_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
@@ -27,6 +27,7 @@
 
 <h3>Manage Classes</h3>
 
+{{! Form to add a class }}
 <h4 class="header">Add Class</h4>
 <form id="add_class" method="POST" action="/class"> 
     <div class="input">
@@ -47,5 +48,5 @@
         <label for="description">Description:</label>
         <textarea name="description" rows="3" cols="80"></textarea> 
     </div>
-    <input type="submit" value="Submit New Class">
+    <input type="submit" value="Submit">
 </form>

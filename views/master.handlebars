@@ -1,3 +1,4 @@
+{{! Table displaying all master info }}
 <h3>Master Index</h3>
 <table>
     <thead> 
@@ -7,7 +8,6 @@
 		<th>Level</th> 
 		<th>Date Born</th> 
         <th>Species</th>
-        <th></th>
         <th></th>
     </thead> 
     <tbody>
@@ -19,7 +19,8 @@
             <td>{{this.danger_level}}</td>
             <td>{{this.date_born}}</td>
             <td>{{this.species}}</td> 
-            <td><a href="/master/{{this.master_id}}">Update</td>
+
+            {{! Deletes the corresponding master on click }}
             <td><button id="delete_button" onclick="deleteMaster({{this.master_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
@@ -32,6 +33,7 @@
 
 <h3>Manage Masters</h3>
 
+{{! Form to add a master }}
 <h4 class="header">Add Master</h4>
 <form id="add_master" method="POST" action="/master"> 
     <div class="dropdown">
@@ -63,5 +65,5 @@
             <option value="Zenith">Zenith</option>
         </select>
     </div>
-    <input type="submit" value="Submit New Master">
+    <input type="submit" value="Submit">
 </form>

@@ -13,8 +13,8 @@ a:hover {
     color: #89edff;
 }
 
-.title {
-    font-weight: bold;
+#title {
+    margin-bottom:10px;
 }
 
 .credits {

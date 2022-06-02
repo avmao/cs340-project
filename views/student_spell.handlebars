@@ -1,9 +1,11 @@
+{{! Table displaying all student-spell intersections }}
 <h3>Student Spell Rosters</h3>
 <table>
     <thead> 
         <th>Spell Registration ID</th> 
         <th>Student ID</th> 
         <th>Spell ID</th> 
+        <th></th>
     </thead> 
     <tbody>
         {{#each student_spell}} 
@@ -11,8 +13,9 @@
             <td>{{student_spell_id}}</td>
             <td>{{student_id}}</td>
             <td>{{spell_id}}</td>
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/medication2/{{id}}">Update</a></td>-->
+            
+            {{! Deletes the corresponding intersection on click }}
+            <td><button id="delete_button" onclick="deleteStudentSpell({{this.student_spell_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
     </tbody> 
@@ -21,6 +24,7 @@
 
 <h3>Manage Student Spell Roster</h3>
 
+{{! Form to add a student-spell intersection }}
 <h4 class="header">Add new spell to a student's current roster:</h4>
 <form id="add_student_spell" method="POST" action="/student_spell">         
     <div class="dropdown">

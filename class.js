@@ -2,6 +2,7 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
+    // Get the data of all classes
     function getClasses(res, mysql, context, complete) {
         mysql.pool.query(
             'SELECT * FROM class',
@@ -19,132 +20,36 @@ module.exports = function(){
         );
     }
 
-    function getClass(res, mysql, context, id, complete) {
-        var sql = "SELECT * FROM class WHERE class_id = ?";
-        var inserts = [id];
-        mysql.pool.query(sql, inserts, function(error, results, fields){
-            if (error) {
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.class = results[0];
-
-            complete();
-        });
-    }
-
-/*
-    function getPeoplebyHomeworld(req, res, mysql, context, complete){
-      var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.homeworld = ?";
-      console.log(req.params)
-      var inserts = [req.params.homeworld]
-      mysql.pool.query(query, inserts, function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.people = results;
-            complete();
-        });
-    }
-
-    /* Find people whose fname starts with a given string in the req 
-    function getPeopleWithNameLike(req, res, mysql, context, complete) {
-      //sanitize the input as well as include the % character
-       var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.fname LIKE " + mysql.pool.escape(req.params.s + '%');
-      console.log(query)
-
-      mysql.pool.query(query, function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.people = results;
-            complete();
-        });
-    }
-
-    function getPerson(res, mysql, context, id, complete){
-        var sql = "SELECT character_id as id, fname, lname, homeworld, age FROM bsg_people WHERE character_id = ?";
-        var inserts = [id];
-        mysql.pool.query(sql, inserts, function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.person = results[0];
-            complete();
-        });
-    }
-*/
-
-/*Display all classes. Requires web based javascript to delete users with AJAX*/
-router.get('/', function (req, res) {
-    var context = {};
-    context.jsscripts = ["delete.js","update.js"];
-    var mysql = req.app.get('mysql');
-    function complete() {
-        res.render('class', context);
-    }
-    getClasses(res, mysql, context, complete);
-});
-
-
-router.post('/', function(req, res) {
-    var mysql = req.app.get('mysql');
-    var sql = "INSERT INTO class (class_id, title, danger_level, description) VALUES (?,?,?,?)";
-    var inserts = [req.body.class_id, req.body.title, req.body.danger_level, req.body.description];
-
-    sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
-        if(error) {
-            console.log(JSON.stringify(error));
-            res.write(JSON.stringify(error));
-            res.end();
-            res.redirect('/class');
-        } else {
-            res.redirect('/class');
-        }
-    });
-});
-
-    /* Display one person for the specific purpose of updating people */
-    router.get('/:id', function(req, res){
-        callbackCount = 0;
+    // Display all classes
+    router.get('/', function (req, res) {
         var context = {};
-        context.jsscripts = ["update.js", "delete.js"];
+        context.jsscripts = ["delete.js"];
         var mysql = req.app.get('mysql');
-
-        getClass(res, mysql, context, req.params.id, complete);
-
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 1){
-                res.render('update_class', context);
-            }
-
+        function complete() {
+            res.render('class', context);
         }
+        getClasses(res, mysql, context, complete);
     });
 
-    /* The URI that update data is sent to in order to update a person 
-    router.put('/:id', function(req, res){
+    // Insert a new entry
+    router.post('/', function(req, res) {
         var mysql = req.app.get('mysql');
-        console.log(req.body)
-        console.log(req.params.id)
-        var sql = "UPDATE bsg_people SET fname=?, lname=?, homeworld=?, age=? WHERE character_id=?";
-        var inserts = [req.body.fname, req.body.lname, req.body.homeworld, req.body.age, req.params.id];
-        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
-            if(error){
-                console.log(error)
+        var sql = "INSERT INTO class (class_id, title, danger_level, description) VALUES (?,?,?,?)";
+        var inserts = [req.body.class_id, req.body.title, req.body.danger_level, req.body.description];
+
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                console.log(JSON.stringify(error));
                 res.write(JSON.stringify(error));
                 res.end();
-            }else{
-                res.status(200);
-                res.end();
+                res.redirect('/class');
+            } else {
+                res.redirect('/class');
             }
         });
     });
 
-    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
+    // Delete a class
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM class WHERE class_id = ?";

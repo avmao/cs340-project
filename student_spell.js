@@ -2,6 +2,7 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
+    // Get spell ids 
     function getSpells(res, mysql, context, complete){
         mysql.pool.query("SELECT spell_id AS spell_id, spell_name FROM spell", function(error, results, fields){
             if(error){
@@ -13,6 +14,7 @@ module.exports = function(){
         });
     }
 
+    // Get student ids
     function getStudents(res, mysql, context, complete){
         mysql.pool.query("SELECT student_id AS student_id FROM student", function(error, results, fields){
             if(error){
@@ -24,6 +26,7 @@ module.exports = function(){
         });
     }
 
+    // Get student-spell intersection id
     function getStudentRoster(res, mysql, context, complete){
         mysql.pool.query("SELECT * FROM student_spell", function(error, results, fields){
             if(error){
@@ -35,10 +38,11 @@ module.exports = function(){
         });
     }
 
+    // Display all student-spell registrations
     router.get('/', function(req, res){         
         var callbackCount = 0;
         var context = {};
-        //context.jsscripts = ["deleteperson.js","filterpeople.js","searchpeople.js"];
+        context.jsscripts = ["delete.js"];
         var mysql = req.app.get('mysql');
         getSpells(res, mysql, context, complete);
         getStudents(res, mysql, context, complete);
@@ -51,6 +55,7 @@ module.exports = function(){
         }
     });
      
+    // Insert a new entry
     router.post('/', function(req, res) {
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO student_spell (student_spell_id, student_id, spell_id) VALUES (?,?,?)";
@@ -66,6 +71,23 @@ module.exports = function(){
             }
         });
     });
+
+    // Delete a student-spell registration
+    router.delete('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM student_spell WHERE student_spell_id=?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            } else {
+                res.status(202).end();
+            }
+        });
+    })
 
     return router;
 }();

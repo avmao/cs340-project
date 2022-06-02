@@ -50,7 +50,7 @@ function deleteMasterSpell(id) {
 
 function deleteStudentSpell(id) {
     $.ajax({
-        url: "/master_spell/" + id,
+        url: "/student_spell/" + id,
         type: "DELETE",
         success: function (result) {
             window.location.reload(true);

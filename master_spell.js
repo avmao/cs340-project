@@ -2,6 +2,7 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
+    // Get spell ids 
     function getSpells(res, mysql, context, complete){
         mysql.pool.query("SELECT spell_id AS spell_id, spell_name FROM spell", function(error, results, fields){
             if(error){
@@ -13,6 +14,7 @@ module.exports = function(){
         });
     }
 
+    // Get master ids
     function getMasters(res, mysql, context, complete){
         mysql.pool.query("SELECT master_id AS master_id FROM master", function(error, results, fields){
             if(error){
@@ -24,6 +26,7 @@ module.exports = function(){
         });
     }
     
+    // Get master-spell intersection id
     function getMasterRoster(res, mysql, context, complete){
         mysql.pool.query("SELECT * FROM master_spell", function(error, results, fields){
             if(error){
@@ -35,10 +38,11 @@ module.exports = function(){
         });
     }
 
+    // Display all master-spell registrations
     router.get('/', function(req, res){         
         var callbackCount = 0;
         var context = {};
-        context.jsscripts = ["delete.js","update.js"];
+        context.jsscripts = ["delete.js"];
         var mysql = req.app.get('mysql');
         getSpells(res, mysql, context, complete);
         getMasters(res, mysql, context, complete);
@@ -50,7 +54,8 @@ module.exports = function(){
             }
         }
     });
-     
+    
+    // Insert a new entry
     router.post('/', function(req, res) {
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO master_spell (master_spell_id, master_id, spell_id) VALUES (?,?,?)";
@@ -67,6 +72,7 @@ module.exports = function(){
         });
     });
 
+    // Delete a master-spell registration
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM master_spell WHERE master_spell_id=?";

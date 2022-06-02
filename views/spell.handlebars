@@ -1,11 +1,13 @@
 <h3>Spell Index</h3>
 
+
 <form id="search_spell" action="/spell" method="GET">
     <label for="search">Search by spell name: </label>
     <input type="text" name="search_input" id="search_input">
     <input type="button" value="Search" onclick="searchSpell()"/> <button><a href="/spell">Cancel</a></button>
 </form>
 
+{{! Table displaying all spell info }}
 <table>
     <thead> 
         <th>ID</th> 
@@ -14,7 +16,6 @@
 		<th>Name</th> 
 		<th>Cost</th> 
 		<th>Damage</th>
-        <th></th>
         <th></th>
     </thead> 
     <tbody>
@@ -26,7 +27,8 @@
             <td>{{this.spell_name}}</td>
             <td>{{this.cost}}</td>
             <td>{{this.damage}}</td>
-            <td><a href="/spell/{{this.spell_id}}">Update</td>
+
+            {{! Deletes the corresponding class on click }}
             <td><button id="delete_button" onclick="deleteSpell({{this.spell_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
@@ -37,6 +39,7 @@
 
 <h3>Manage Spells</h3>
 
+{{! Form to add a spell }}
 <h4 class="header">Add Spell</h4>
 <form id="add_spell" method="POST" action="/spell"> 
     <div class="dropdown">
@@ -69,11 +72,12 @@
         <label for="Damage">Damage [0-10000]: </label>
         <input type="number" name="damage"><br>
     </div>
-    <input type="submit" value="Submit New Spell">
+    <input type="submit" value="Submit">
 </form>
 
 <hr>
 
+{{! Form to edit a class }}
 <h4 class="header">Edit Spell</h4>
 <form id="edit_spell" method="POST" action="/update_spell"> 
     <div class="dropdown">
