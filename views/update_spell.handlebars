@@ -20,7 +20,7 @@
     <div class="dropdown">
         <label for="class">Change class:</label>
         <select name="class_id"> 
-                <option value="{{spell.class_id}}" selected>{{spell.class_id}}</option>
+            <option value="{{spell.class_id}}" selected>{{spell.class_id}}</option>
             {{#each class}}
                 <option value="{{class_id}}">{{class_id}}</option>
             {{/each}}
@@ -29,7 +29,7 @@
     <div class="dropdown">
         <label for="element">Change element:</label>
         <select name="element">
-            <option value="{{spell.element}}" selected> {{spell.element}}</option>
+            <option value="{{spell.element}}" selected>{{spell.element}}</option>
             <option value="Air">Air</option>
             <option value="Water">Water</option>
             <option value="Fire">Fire</option>
@@ -49,6 +49,6 @@
         <label for="damage">Change damage [0-10000]: </label>
         <input type="number" name="damage" value="{{spell.damage}}"><br>
     </div> <br>
-
-    <button onclick="updateSpell({{spell.spell_id}})">Update</button> <button><a href="/spell">Cancel</button>
 </form>
+
+<button onclick="updateSpell({{spell.spell_id}})">Update</button> <button><a href="/spell">Cancel</a></button>

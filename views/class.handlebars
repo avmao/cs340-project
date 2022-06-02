@@ -4,7 +4,10 @@
         <th>ID</th> 
         <th>Title</th> 
         <th>Danger Level</th> 
-		<th>Description</th> 
+		<th>Description</th>
+        <th></th> 
+        <th></th> 
+
     </thead> 
     <tbody>
         {{#each class}} 
@@ -13,8 +16,8 @@
             <td>{{this.title}}</td>
             <td>{{this.danger_level}}</td>
             <td>{{this.description}}</td> 
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/medication2/{{id}}">Update</a></td>-->
+            <td><a href="/class/{{this.class_id}}">Update</a></td>
+            <td><button id="delete_button" onclick="deleteClass({{this.class_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
     </tbody> 
@@ -45,42 +48,4 @@
         <textarea name="description" rows="3" cols="80"></textarea> 
     </div>
     <input type="submit" value="Submit New Class">
-</form>
-    
-<hr>
-
-<h4 class="header">Update Class</h4>
-<form>
-    <label for="class_id_update">Enter the ID of the class to update:</label>
-    <input type="number" name="class_id_update">
-
-    <div class="input">
-        <label for="title">Change title: </label>
-        <input type="text" name="title">
-    </div>
-    <div class="dropdown">
-        <label for="danger_level">Change danger level:</label>
-        <select name="danger_level">
-            <option value="danger_1">Apprentice</option>
-            <option value="danger_2">Adept</option>
-            <option value="danger_3">Expert</option>
-            <option value="danger_4">Legendary</option>
-            <option value="danger_5">Zenith</option>
-        </select>
-    </div>
-    <div class="description">
-        <label for="class-description">Change description:</label>
-        <textarea name="class-description" rows="3" cols="80"></textarea> 
-    </div>
-    <input type="submit" value="Update Class">
-
-</form>
-
-<hr>
-
-<h4 class="header">Remove Class</h4>
-<form>
-    <label for="class_id_remove">Enter the ID of the class to be removed:</label>
-        <input type="number" name="class_id_remove"><br>
-    <input type="submit" value="Remove Class">
 </form>

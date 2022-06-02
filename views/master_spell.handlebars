@@ -4,6 +4,7 @@
         <th>Spell Registration ID</th> 
         <th>Master ID</th> 
         <th>Spell ID</th> 
+        <th></th>
     </thead> 
     <tbody>
         {{#each master_spell}} 
@@ -11,8 +12,7 @@
             <td>{{master_spell_id}}</td>
             <td>{{master_id}}</td>
             <td>{{spell_id}}</td>
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/medication2/{{id}}">Update</a></td>-->
+            <td><button id="delete_button" onclick="deleteMasterSpell({{this.master_spell_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
     </tbody> 

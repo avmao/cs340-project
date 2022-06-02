@@ -1,4 +1,11 @@
 <h3>Spell Index</h3>
+
+<form id="search_spell" action="/spell" method="GET">
+    <label for="search">Search by spell name: </label>
+    <input type="text" name="search_input" id="search_input">
+    <input type="button" value="Search" onclick="searchSpell()"/> <button><a href="/spell">Cancel</a></button>
+</form>
+
 <table>
     <thead> 
         <th>ID</th> 
@@ -63,4 +70,49 @@
         <input type="number" name="damage"><br>
     </div>
     <input type="submit" value="Submit New Spell">
+</form>
+
+<hr>
+
+<h4 class="header">Edit Spell</h4>
+<form id="edit_spell" method="POST" action="/update_spell"> 
+    <div class="dropdown">
+        <label for="spell_id">Spell ID:</label>
+        <select name="spell_id" id="update_spell_id">
+            {{#each spell}}
+                <option value='{{spell_id}}'>{{spell_id}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="dropdown">
+        <label for="class">Class:</label>
+        <select name="class_id">
+            {{#each class}}
+                <option value='{{class_id}}'>{{class_id}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="dropdown">
+        <label for="element">Element:</label>
+        <select name="element">
+            <option value="Air">Air</option>
+            <option value="Water">Water</option>
+            <option value="Fire">Fire</option>
+            <option value="Earth">Earth</option>
+            <option value="Dark">Dark</option>
+            <option value="Light">Light</option>
+        </select>
+    </div>
+
+    <div class="input">
+        <label for="name">Name: </label>
+        <input type="text" name="spell_name"><br>
+
+        <label for="cost">Cost [10-1000]: </label>
+        <input type="number" name="cost"><br>
+    
+        <label for="Damage">Damage [0-10000]: </label>
+        <input type="number" name="damage"><br>
+    </div>
+    <input type="submit" value="Update">
 </form>

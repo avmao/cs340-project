@@ -25,6 +25,8 @@ app.use('/student', require('./student.js'));
 app.use('/master_spell', require('./master_spell.js'));
 app.use('/student_spell', require('./student_spell.js'));
 
+app.use('/update_spell', require('./update_spell.js'));
+
 app.use('/', express.static('public'));
 
 app.use(function (req, res) {

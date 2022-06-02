@@ -9,7 +9,8 @@
 		<th>Date Born</th> 
         <th>Registration Date</th> 
 		<th>Species</th> 
-
+        <th></th>
+        <th></th>
     </thead> 
     <tbody>
         {{#each student}} 
@@ -22,8 +23,8 @@
             <td>{{this.date_born}}</td> 
             <td>{{this.registration}}</td> 
             <td>{{this.species}}</td> 
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/medication2/{{id}}">Update</a></td>-->
+            <td><a href="/student/{{this.student_id}}">Update</td>
+            <td><button id="delete_button" onclick="deleteStudent({{this.student_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
     </tbody> 
@@ -131,13 +132,4 @@
     </div>
 
     <input type="submit" value="Update Student"><br>
-</form>
-
-<hr>
-
-<h4 class="header">Remove Student</h4>
-<form>
-    <label for="student_id_remove">Enter the ID of the student to be removed:</label>
-        <input type="number" name="student_id_remove"><br>
-    <input type="submit" value="Remove Student">
 </form>

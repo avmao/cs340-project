@@ -78,7 +78,7 @@ module.exports = function(){
         var context = {};
         var callbackCount = 0;
 
-        //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
+        context.jsscripts = ["delete.js", "update.js"];
         var mysql = req.app.get('mysql');
 
         getMasters(res, mysql, context, complete);
@@ -162,10 +162,10 @@ module.exports = function(){
         });
     });
 
-    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. 
+    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM bsg_people WHERE character_id = ?";
+        var sql = "DELETE FROM master WHERE master_id = ?";
         var inserts = [req.params.id];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
@@ -178,6 +178,6 @@ module.exports = function(){
             }
         })
     })
-*/
+
     return router;
 }();

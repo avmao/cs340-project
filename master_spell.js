@@ -23,7 +23,6 @@ module.exports = function(){
             complete();
         });
     }
-
     
     function getMasterRoster(res, mysql, context, complete){
         mysql.pool.query("SELECT * FROM master_spell", function(error, results, fields){
@@ -39,7 +38,7 @@ module.exports = function(){
     router.get('/', function(req, res){         
         var callbackCount = 0;
         var context = {};
-        //context.jsscripts = ["deleteperson.js","filterpeople.js","searchpeople.js"];
+        context.jsscripts = ["delete.js","update.js"];
         var mysql = req.app.get('mysql');
         getSpells(res, mysql, context, complete);
         getMasters(res, mysql, context, complete);
@@ -63,11 +62,26 @@ module.exports = function(){
                 res.end();
                 res.redirect('/master_spell');
             } else {
-                res.redirect('/master_Spell');
+                res.redirect('/master_spell');
             }
         });
     });
 
+    router.delete('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM master_spell WHERE master_spell_id=?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            } else {
+                res.status(202).end();
+            }
+        });
+    })
 
     return router;
 }();

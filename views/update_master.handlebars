@@ -1,0 +1,26 @@
+
+<h4 class="header">Update {{master.master_name}}</h4>
+<form>
+    <div class="dropdown">
+        <label for="class">Class:</label>
+        <select name="class_id">
+            <option value="{{master.class_id}}" selected>{{master.class_id}}</option>
+            {{#each class}}
+                <option value="{{class_id}}">{{class_id}}</option>
+            {{/each}}
+        </select>
+    </div>
+    
+    <div class="input">
+        <label for="name">Change name: </label>
+        <input type="text" name="name"><br>
+    
+        <label for="cost">Change birthdate: </label>
+        <input type="date" name="birthdate"><br>
+    
+        <label for="species">Change species: </label>
+        <input type="text" name="species"><br>
+    </div>
+</form>
+
+<button onclick="updateMaster({{master.master_id}})">Update</button> <button><a href="/master">Cancel</button>

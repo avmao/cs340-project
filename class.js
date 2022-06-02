@@ -19,6 +19,20 @@ module.exports = function(){
         );
     }
 
+    function getClass(res, mysql, context, id, complete) {
+        var sql = "SELECT * FROM class WHERE class_id = ?";
+        var inserts = [id];
+        mysql.pool.query(sql, inserts, function(error, results, fields){
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.class = results[0];
+
+            complete();
+        });
+    }
+
 /*
     function getPeoplebyHomeworld(req, res, mysql, context, complete){
       var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.homeworld = ?";
@@ -66,10 +80,8 @@ module.exports = function(){
 
 /*Display all classes. Requires web based javascript to delete users with AJAX*/
 router.get('/', function (req, res) {
-    console.log("get");
-
     var context = {};
-    //context.jsscripts = ["deletespell.js","filterspell.js","searchspell.js"];
+    context.jsscripts = ["delete.js","update.js"];
     var mysql = req.app.get('mysql');
     function complete() {
         res.render('class', context);
@@ -79,10 +91,10 @@ router.get('/', function (req, res) {
 
 
 router.post('/', function(req, res) {
-    console.log("post");
     var mysql = req.app.get('mysql');
     var sql = "INSERT INTO class (class_id, title, danger_level, description) VALUES (?,?,?,?)";
     var inserts = [req.body.class_id, req.body.title, req.body.danger_level, req.body.description];
+
     sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
         if(error) {
             console.log(JSON.stringify(error));
@@ -95,18 +107,19 @@ router.post('/', function(req, res) {
     });
 });
 
-    /* Display one person for the specific purpose of updating people 
+    /* Display one person for the specific purpose of updating people */
     router.get('/:id', function(req, res){
         callbackCount = 0;
         var context = {};
-        context.jsscripts = ["selectedplanet.js", "updateperson.js"];
+        context.jsscripts = ["update.js", "delete.js"];
         var mysql = req.app.get('mysql');
-        getPerson(res, mysql, context, req.params.id, complete);
-        getPlanets(res, mysql, context, complete);
+
+        getClass(res, mysql, context, req.params.id, complete);
+
         function complete(){
             callbackCount++;
-            if(callbackCount >= 2){
-                res.render('update-person', context);
+            if(callbackCount >= 1){
+                res.render('update_class', context);
             }
 
         }
@@ -131,10 +144,10 @@ router.post('/', function(req, res) {
         });
     });
 
-    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. 
+    /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM bsg_people WHERE character_id = ?";
+        var sql = "DELETE FROM class WHERE class_id = ?";
         var inserts = [req.params.id];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
@@ -147,6 +160,6 @@ router.post('/', function(req, res) {
             }
         })
     })
-*/
+
     return router;
 }();

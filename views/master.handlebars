@@ -6,7 +6,9 @@
         <th>Class</th> 
 		<th>Level</th> 
 		<th>Date Born</th> 
-        <th>Species</th> 
+        <th>Species</th>
+        <th></th>
+        <th></th>
     </thead> 
     <tbody>
         {{#each master}} 
@@ -17,8 +19,8 @@
             <td>{{this.danger_level}}</td>
             <td>{{this.date_born}}</td>
             <td>{{this.species}}</td> 
-            <!--<td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/medication2/{{id}}">Update</a></td>-->
+            <td><a href="/master/{{this.master_id}}">Update</td>
+            <td><button id="delete_button" onclick="deleteMaster({{this.master_id}})">Delete</button></td>
         </tr> 
         {{/each}} 
     </tbody> 
@@ -62,68 +64,4 @@
         </select>
     </div>
     <input type="submit" value="Submit New Master">
-</form>
-
-<hr>
-
-<h4 class="header">Update Master</h4>
-<form>
-    <label for="master_id_update">Enter the ID of the master to update:</label>
-    <input type="number" name="master_id_update">
-    
-    <div class="dropdown">
-        <label for="class">Class:</label>
-        <select name="class">
-            {{#each class}}
-                <option value='{{class_id}}'>{{class_id}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div class="select">
-        <form>
-            <label for="spells">Edit spells:</label>
-            <select name="spells" id="multiselect" multiple>
-                <option value="spell1">Spell 1</option>
-                <option value="spell2">Spell 2</option>
-                <option value="spell3">Spell 3</option>
-                <option value="spell4">Spell 4</option>
-                <option value="spell4">Spell 5</option>
-            </select>
-        </form>
-    </div>
-
-    <div class="select">
-        <form>
-            <label for="students">Edit students:</label>
-            <select name="students" id="multiselect" multiple>
-                <option value="student1">Student 1</option>
-                <option value="student2">Student 2</option>
-                <option value="student3">Student 3</option>
-                <option value="student4">Student 4</option>
-                <option value="student4">Student 5</option>
-            </select>
-        </form>
-    </div>
-    
-    <div class="input">
-        <label for="name">Change name: </label>
-        <input type="text" name="name"><br>
-    
-        <label for="cost">Change birthdate: </label>
-        <input type="date" name="birthdate"><br>
-    
-        <label for="species">Change species: </label>
-        <input type="text" name="species"><br>
-    </div>
-
-    <input type="submit" value="Update Master">
-</form>
-
-<hr>
-
-<h4 class="header">Remove Master</h4>
-<form>
-    <label for="master_id_remove">Enter the ID of the master to be removed:</label>
-        <input type="number" name="master_id_remove"><br>
-    <input type="submit" value="Remove Master">
 </form>
