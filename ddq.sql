@@ -52,16 +52,14 @@ CREATE TABLE master (
     PRIMARY KEY (master_id),
     FOREIGN KEY (class_id) REFERENCES class (class_id)
     ON UPDATE CASCADE
-    ON DELETE CASCADE/*,
-    FOREIGN KEY (master_spell_id) REFERENCES master_spell (master_spell_id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE*/);
+    ON DELETE CASCADE);
 
 -- Master inserts
 INSERT INTO master (master_name, danger_level, date_born, species, class_id)
 VALUES
     ('Elrond', 'Expert', '1000-03-13', 'Elf', (SELECT class_id FROM class WHERE title = 'Demon')),
-    ('Gandalf', 'Legendary', '0029-10-08', 'Human', (SELECT class_id FROM class WHERE title = 'A'));
+    ('Gandalf', 'Legendary', '0029-10-08', 'Human', (SELECT class_id FROM class WHERE title = 'A')),
+    ('Harry Potter', 'Expert', '1994-05-04', 'Warlock', (SELECT class_id FROM class WHERE title = 'Demon'));
 
 -- Create master-spell intersection table
 CREATE TABLE master_spell (
@@ -80,12 +78,15 @@ CREATE TABLE master_spell (
 INSERT INTO master_spell (master_id, spell_id)
 VALUES
     ((SELECT master_id FROM master WHERE master_name = 'Elrond'), (SELECT spell_id FROM spell WHERE spell_name = 'Fire Bolt')),
-    ((SELECT master_id FROM master WHERE master_name = 'Elrond'), (SELECT spell_id FROM spell WHERE spell_name = 'Wind Blast'));
+    ((SELECT master_id FROM master WHERE master_name = 'Elrond'), (SELECT spell_id FROM spell WHERE spell_name = 'Wind Blast')),
+    ((SELECT master_id FROM master WHERE master_name = 'Harry Potter'), (SELECT spell_id FROM spell WHERE spell_name = 'Holy Lightning Flash'));
 
 -- Query to get the list of master names and their spells
+/*
 SELECT master.master_name, spell.spell_name FROM master_spell
 JOIN master USING (master_id)
 JOIN spell USING (spell_id); 
+*/
 
 -- Create student table
 CREATE TABLE student (
@@ -109,7 +110,8 @@ CREATE TABLE student (
 INSERT INTO student (student_name, danger_level, species, date_born, registration, class_id, master_id)
 VALUES
 ('Geoffry', 'Adept', 'Human', '2000-05-21', '2015-09-01', (SELECT class_id FROM class WHERE title = 'A'), (SELECT master_id FROM master WHERE master_name = 'Elrond')),
-('Frodo Baggins', 'Apprentice', 'Hobbit', '0300-01-09', '0320-09-01', (SELECT class_id FROM class WHERE title = 'Mero'), (SELECT master_id FROM master WHERE master_name = 'Gandalf'));
+('Frodo Baggins', 'Apprentice', 'Hobbit', '0300-01-09', '0320-09-01', (SELECT class_id FROM class WHERE title = 'Demon'), (SELECT master_id FROM master WHERE master_name = 'Gandalf')),
+('Rimuru Tempest', 'Zenith', 'Slime', '0005-10-09', '2005-09-08', (SELECT class_id FROM class WHERE title = 'Mero'), (SELECT master_id FROM master WHERE master_name = 'Harry Potter'));
 
 -- Create student-spell intersection table
 CREATE TABLE student_spell (
@@ -127,9 +129,14 @@ CREATE TABLE student_spell (
 -- Student-spell registration inserts
 INSERT INTO student_spell (student_id, spell_id)
 VALUES
-    ((SELECT student_id FROM student WHERE student_name = 'Geoffry'), (SELECT spell_id FROM spell WHERE spell_name = 'Fire Bolt'));
+    ((SELECT student_id FROM student WHERE student_name = 'Geoffry'), (SELECT spell_id FROM spell WHERE spell_name = 'Fire Bolt')),
+    ((SELECT student_id FROM student WHERE student_name = 'Rimuru Tempest'), (SELECT spell_id FROM spell WHERE spell_name = 'Fire Bolt')),
+    ((SELECT student_id FROM student WHERE student_name = 'Rimuru Tempest'), (SELECT spell_id FROM spell WHERE spell_name = 'Wind Blast')),
+    ((SELECT student_id FROM student WHERE student_name = 'Rimuru Tempest'), (SELECT spell_id FROM spell WHERE spell_name = 'Holy Lightning Flash'));
 
 -- Query to get the list of master names and their spells
+/*
 SELECT student.student_name, spell.spell_name FROM student_spell
 JOIN student USING (student_id)
 JOIN spell USING (spell_id);
+*/
